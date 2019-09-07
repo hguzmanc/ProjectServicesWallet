@@ -51,6 +51,20 @@ class Wallet(Base):
     def get_discharge_amount(self):
         return self.__discharge_amount
 
+    def is_number_balance(self, balance):
+        number = re.match('[0-9]', balance)
+        if number is not None:
+            return True
+        return False
+
+    def set_balance_amount(self, balance_amount):
+        if not self.is_number_balance(balance_amount):
+            raise Exception("Entered value is less than 0")
+        self.__balance = balance_amount
+
+    def get_balance_amount(self):
+        return self.__balance
+
     def to_json(self):
         return {'income_amount': self.get_income_amount(), 'discharge_amount': self.get_discharge_amount(),
-                'balance': self.__balance}
+                'balance': self.get_balance_amount()}
