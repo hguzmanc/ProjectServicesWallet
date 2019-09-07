@@ -22,3 +22,9 @@ class Wallet(Base):
         if number is not None:
             return True
         return False
+
+    def income_greater_than_or_equal_to_zero(self, income_amount):
+        if income_amount >= 0:
+            return True
+        return False
+
