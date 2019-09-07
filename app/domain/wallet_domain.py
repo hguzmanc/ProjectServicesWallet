@@ -28,3 +28,4 @@ class Wallet(Base):
             return True
         return False
 
+
