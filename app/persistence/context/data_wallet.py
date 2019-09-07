@@ -9,9 +9,11 @@ class WalletContext(IWalletContext):
         db = pymysql.connect("localhost", "root", "root", "wallet")
         cursor = db.cursor()
         cursor.execute("SELECT balance FROM wallet_balance where idwallet_balance = (select max(idwallet_balance) From wallet_balance)")
-        data = cursor.fetchone()
+        data = cursor.fetchall()
         wallet = DomainWallet()
-        wallet.set_balance_amount(data.balance)
+        for item in data:
+            balance_amount = item[0]
+            wallet.set_balance_amount(balance_amount)
         db.close()
         return wallet
 
