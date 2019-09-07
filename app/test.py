@@ -15,7 +15,7 @@ class TestWallet(unittest.TestCase):
         self.assertTrue(wallet_domain.income_greater_than_or_equal_to_zero, 5)
 
     def test_discharge_greater_than_or_equal_to_zero(self):
-        self.assertTrue(discharge_greater_than_or_equal_to_zero, 5)
+        self.assertTrue(wallet_domain.discharge_greater_than_or_equal_to_zero, 5)
 
 
 if __name__ == '__main__':
