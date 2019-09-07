@@ -16,3 +16,9 @@ class Wallet(Base):
         if number is not None:
             return True
         return False
+
+    def is_number_discharge(self, discharge_amount):
+        number = re.match('[0-9]', discharge_amount)
+        if number is not None:
+            return True
+        return False
