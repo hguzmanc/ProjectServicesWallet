@@ -11,7 +11,7 @@ class WalletContext(IWalletContext):
         cursor.execute("SELECT balance FROM wallet_balance where idwallet_balance = (select max(idwallet_balance) From wallet_balance)")
         data = cursor.fetchone()
         wallet = DomainWallet()
-        wallet.balance = data.balance
+        wallet.set_balance_amount(data.balance)
         db.close()
         return wallet
 
