@@ -23,12 +23,20 @@ class WalletContext(IWalletContext):
         cursor.execute("SELECT max(idwallet_balance) FROM wallet_balance")
         data = cursor.fetchall()
         id_wallet = 0
+        current_balance = 0
         for item in data:
             id_wallet = item[0]
+            cursor.execute("SELECT balance FROM wallet_balance WHERE idwallet_balance = %s", (id_wallet))
+            balance_query = cursor.fetchall()
+            for balance_iterator in balance_query:
+                current_balance = balance_iterator[0]
             id_wallet = id_wallet + 1
         income_amount = int(wallet.get_income_amount())
         discharge_amount = int(wallet.get_discharge_amount())
-        balance = wallet.get_balance_amount()
+        if income_amount > 0:
+            balance = current_balance + income_amount
+        else:
+            balance = current_balance - discharge_amount
         cursor = db.cursor()
         cursor.execute("INSERT INTO wallet_balance (idwallet_balance, income_amount, discharge_amount, balance)"
                        "VALUES(%s, %s, %s, %s)", (id_wallet, income_amount, discharge_amount, balance))
