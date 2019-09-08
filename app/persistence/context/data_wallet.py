@@ -18,12 +18,22 @@ class WalletContext(IWalletContext):
         return wallet
 
     def save_wallet(self, wallet: DomainWallet):
-        income_amount = wallet.get_income_amount()
-        discharge_amount = wallet.get_discharge_amount()
-        balance = wallet.get_balance_amount()
         db = pymysql.connect("localhost", "root", "root", "wallet")
         cursor = db.cursor()
-        cursor.execute("INSERT INTO wallet_balance (income_amount, discharge_amount, balance)VALUES (" +
-                    income_amount + ", " + discharge_amount + ", " + balance + ")")
+        cursor.execute("SELECT max(idwallet_balance) FROM wallet_balance")
+        data = cursor.fetchall()
+        id_wallet = 0
+        for item in data:
+            id_wallet = item[0]
+            id_wallet = id_wallet + 1
+        income_amount = int(wallet.get_income_amount())
+        discharge_amount = int(wallet.get_discharge_amount())
+        balance = wallet.get_balance_amount()
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO wallet_balance (idwallet_balance, income_amount, discharge_amount, balance)"
+                       "VALUES(%s, %s, %s, %s)", (id_wallet, income_amount, discharge_amount, balance))
+
+        db.commit()
+        cursor.close()
         return 1
 

@@ -12,9 +12,11 @@ app = Flask(__name__)
 
 @app.route('/save', methods=['POST'])
 def save():
-    income_amount = request.args.get('income_amount', '0')
-    discharge_amount = request.args.get('discharge_amount', '0')
-    return wallet_command.save_wallet(income_amount, discharge_amount)
+    if request.method == "POST":
+        income_amount = request.values.get("income_amount")
+        discharge_amount = request.values.get("discharge_amount")
+        wallet_command.save_wallet(income_amount, discharge_amount)
+    return Response(response="OK", status=201)
 
 
 @app.route('/get', methods=['GET'])

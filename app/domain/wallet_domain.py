@@ -22,12 +22,12 @@ class Wallet(Base):
         return False
 
     def income_greater_than_or_equal_to_zero(self, income_amount):
-        if income_amount >= 0:
+        if int(income_amount) >= 0:
             return True
         return False
 
     def discharge_greater_than_or_equal_to_zero(self, discharge_amount):
-        if discharge_amount >= 0:
+        if int(discharge_amount) >= 0:
             return True
         return False
 

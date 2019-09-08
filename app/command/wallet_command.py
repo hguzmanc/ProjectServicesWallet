@@ -8,9 +8,9 @@ class WalletCommand(IWalletCommand):
         self.wallet_context = wallet_context
 
     def save_wallet(self, income_amount, discharge_amount):
-        balance = self.wallet_context.get_balance()
+        balance = self.wallet_context.get_balance().get_balance_amount()
         wallet = DomainWallet()
-        if wallet.set_discharge_amount(discharge_amount) <= balance:
+        if int(discharge_amount) <= balance:
             wallet.set_income_amount(income_amount)
             wallet.set_discharge_amount(discharge_amount)
             self.wallet_context.save_wallet(wallet)
