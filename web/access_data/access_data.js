@@ -1,3 +1,0 @@
-<Script>
-    function()
-</Script>
